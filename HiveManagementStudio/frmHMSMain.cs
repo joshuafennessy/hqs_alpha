@@ -155,10 +155,7 @@ namespace HiveManagementStudio
             
             DSNName = cboDSNList.SelectedItem.ToString();
             string cleanDSNName = DSNName.Substring(0, DSNName.IndexOf("-") - 1).Trim();
-            //MessageBox.Show(cleanDSNName);
-
-            //try to get the userid from the registry
-                        //open registry and get a list of system DSNs
+                   
             Microsoft.Win32.RegistryKey reg = (Microsoft.Win32.Registry.CurrentUser).OpenSubKey("Software");
             if (reg != null)
             {
