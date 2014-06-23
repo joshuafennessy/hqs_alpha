@@ -208,7 +208,7 @@ namespace HiveManagementStudio
             }
             catch (Exception ex)
             {
-                txtMessage.Text = ex.InnerException.ToString();
+                txtMessage.Text = ex.Message.ToString();
             }
             //MessageBox.Show(dsResults.Tables[0].Rows.Count.ToString());
         }
