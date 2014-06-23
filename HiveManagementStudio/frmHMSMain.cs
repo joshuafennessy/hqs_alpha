@@ -14,6 +14,9 @@ namespace HiveManagementStudio
     public partial class frmHMSMain : Form
     {
         private string DSNName;
+        private OdbcConnection conn;
+        private OdbcCommand cmd;
+
 
         private enum DataSourceType
         {
@@ -56,10 +59,10 @@ namespace HiveManagementStudio
                     reg = reg.OpenSubKey("ODBC.INI");
                     if (reg != null)
                     {
-                        foreach (string sName in reg.GetSubKeyNames())
-                        {
-                            MessageBox.Show(sName);
-                        }
+                        //foreach (string sName in reg.GetSubKeyNames())
+                        //{
+                        //    MessageBox.Show(sName);
+                        //}
                         reg = reg.OpenSubKey("ODBC Data Sources");
                         if (reg != null)
                         {
@@ -138,11 +141,17 @@ namespace HiveManagementStudio
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            OdbcConnection conn = new OdbcConnection();
-            conn.ConnectionString = "";
+            conn = new OdbcConnection();
+    
+            string cleanDSNName = DSNName.Substring(0, DSNName.IndexOf("-") - 1).Trim();
+
+            conn.ConnectionString = "Provider=MSDASQL.1;Persist Security Info=True;User ID=" + txtUserName.Text + ";DSN=" + cleanDSNName + ";Password=" + txtPassword.Text + ";";
             try
             {
+                lblConnectionStatus.Text = "Attempting Connection.";
                 conn.Open();
+                lblConnectionStatus.Text = "Connected to " + DSNName;
+                
             }
             catch (Exception ex)
             {
@@ -174,6 +183,60 @@ namespace HiveManagementStudio
                     }
                 }
             }
+        }
+
+        private void btnExecute_Click(object sender, EventArgs e)
+        {
+            cmd = new OdbcCommand();
+            OdbcDataAdapter daResults = new OdbcDataAdapter();
+            System.Data.DataSet dsResults = new System.Data.DataSet();
+            BindingSource bsResult = new BindingSource();
+            txtMessage.Text = String.Empty;
+
+            try
+            {
+                cmd.CommandText = txtQuery.Text;
+                cmd.Connection = conn;
+
+                daResults.SelectCommand = cmd;
+                daResults.Fill(dsResults);
+                bsResult.DataSource = dsResults.Tables[0];
+
+                dgResults.DataSource = bsResult;
+                dgResults.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                txtMessage.Text = "Query Execution Completed. " + dsResults.Tables[0].Rows.Count.ToString() + " rows returned.";
+            }
+            catch (Exception ex)
+            {
+                txtMessage.Text = ex.InnerException.ToString();
+            }
+            //MessageBox.Show(dsResults.Tables[0].Rows.Count.ToString());
+        }
+
+        private StringBuilder FormatResults(System.Data.DataSet dsResults)
+        {
+            StringBuilder sbOutput = new StringBuilder();
+            
+            //loop through columns and append to String Builder
+            foreach (System.Data.DataColumn dc in dsResults.Tables[0].Columns)
+            {
+                sbOutput.Append(dc.ToString() + "\t");
+
+            }
+            sbOutput.Append("\r\n\r\n");
+
+            //loop through rows and append to String Builder
+            foreach (System.Data.DataRow dr in dsResults.Tables[0].Rows)
+            {
+                int intRow = dgResults.Rows.Add();
+                foreach (System.Data.DataColumn dc in dsResults.Tables[0].Columns)
+                {
+                    sbOutput.Append(dr[dc].ToString() + "\t");
+                }
+                sbOutput.Append("\r\n");
+            }
+
+            return sbOutput;
         }
     }
 }
