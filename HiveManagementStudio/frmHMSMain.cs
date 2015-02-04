@@ -199,19 +199,23 @@ namespace HiveManagementStudio
                 cmd.Connection = conn;
 
                 daResults.SelectCommand = cmd;
+                lblQueryStatus.Text = "Query Executing...";
                 daResults.Fill(dsResults);
                 bsResult.DataSource = dsResults.Tables[0];
 
                 dgResults.DataSource = bsResult;
                 dgResults.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                lblQueryStatus.Text = "Query Execution Completed. " + dsResults.Tables[0].Rows.Count.ToString() + " rows returned.";
                 txtMessage.Text = "Query Execution Completed. " + dsResults.Tables[0].Rows.Count.ToString() + " rows returned.";
             }
             catch (Exception ex)
             {
+                lblQueryStatus.Text = "Error Message Returned. Check Messages tab for more information.";
                 txtMessage.Text = ex.Message.ToString();
             }
-            //MessageBox.Show(dsResults.Tables[0].Rows.Count.ToString());
         }
+            //MessageBox.Show(dsResults.Tables[0].Rows.Count.ToString());
+        
 
         private StringBuilder FormatResults(System.Data.DataSet dsResults)
         {
@@ -237,6 +241,11 @@ namespace HiveManagementStudio
             }
 
             return sbOutput;
+        }
+
+        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
