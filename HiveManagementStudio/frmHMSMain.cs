@@ -195,6 +195,7 @@ namespace HiveManagementStudio
             try
             {
                 toolSQueryResults.Text = "Query Executing...";
+                this.Cursor = Cursors.WaitCursor;
                 cmd.CommandText = txtQuery.Text;
                 cmd.Connection = conn;
 
@@ -206,6 +207,7 @@ namespace HiveManagementStudio
                 dgResults.DataSource = bsResult;
                 dgResults.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
                 toolSQueryResults.Text = "Query Execution Complete. " + dsResults.Tables[0].Rows.Count.ToString() + " rows returned.";
+                this.Cursor = Cursors.Default;
                 btnExecute.Visible = true;
             }
             catch (Exception ex)
