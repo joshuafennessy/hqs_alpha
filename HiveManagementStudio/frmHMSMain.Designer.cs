@@ -35,18 +35,20 @@
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
-            this.lblConnectionStatus = new System.Windows.Forms.Label();
             this.tabQueryResults = new System.Windows.Forms.TabControl();
-            this.btnExecute = new System.Windows.Forms.Button();
-            this.txtQuery = new System.Windows.Forms.TextBox();
             this.tabpResult = new System.Windows.Forms.TabPage();
+            this.lblQueryStatus = new System.Windows.Forms.Label();
             this.dgResults = new System.Windows.Forms.DataGridView();
             this.tabpMessages = new System.Windows.Forms.TabPage();
             this.txtMessage = new System.Windows.Forms.TextBox();
+            this.btnExecute = new System.Windows.Forms.Button();
+            this.txtQuery = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.lblQueryStatus = new System.Windows.Forms.Label();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblConnectionStatus = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tabQueryResults.SuspendLayout();
             this.tabpResult.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgResults)).BeginInit();
@@ -57,12 +59,14 @@
             this.splitContainer1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboDSNList
             // 
             this.cboDSNList.FormattingEnabled = true;
-            this.cboDSNList.Location = new System.Drawing.Point(538, 5);
+            this.cboDSNList.Location = new System.Drawing.Point(67, 2);
             this.cboDSNList.Margin = new System.Windows.Forms.Padding(2);
             this.cboDSNList.Name = "cboDSNList";
             this.cboDSNList.Size = new System.Drawing.Size(291, 21);
@@ -71,7 +75,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(709, 49);
+            this.btnConnect.Location = new System.Drawing.Point(716, 2);
             this.btnConnect.Margin = new System.Windows.Forms.Padding(2);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(119, 21);
@@ -83,7 +87,7 @@
             // lblDSNName
             // 
             this.lblDSNName.AutoSize = true;
-            this.lblDSNName.Location = new System.Drawing.Point(475, 6);
+            this.lblDSNName.Location = new System.Drawing.Point(2, 0);
             this.lblDSNName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDSNName.Name = "lblDSNName";
             this.lblDSNName.Size = new System.Drawing.Size(61, 13);
@@ -92,7 +96,7 @@
             // 
             // txtUserName
             // 
-            this.txtUserName.Location = new System.Drawing.Point(538, 29);
+            this.txtUserName.Location = new System.Drawing.Point(426, 2);
             this.txtUserName.Margin = new System.Windows.Forms.Padding(2);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(106, 20);
@@ -101,7 +105,7 @@
             // lblUserName
             // 
             this.lblUserName.AutoSize = true;
-            this.lblUserName.Location = new System.Drawing.Point(475, 29);
+            this.lblUserName.Location = new System.Drawing.Point(362, 0);
             this.lblUserName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(60, 13);
@@ -111,7 +115,7 @@
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(654, 31);
+            this.lblPassword.Location = new System.Drawing.Point(536, 0);
             this.lblPassword.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(53, 13);
@@ -120,24 +124,13 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(710, 29);
+            this.txtPassword.Location = new System.Drawing.Point(593, 2);
             this.txtPassword.Margin = new System.Windows.Forms.Padding(2);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(119, 20);
             this.txtPassword.TabIndex = 5;
             this.txtPassword.UseSystemPasswordChar = true;
-            // 
-            // lblConnectionStatus
-            // 
-            this.lblConnectionStatus.AutoSize = true;
-            this.lblConnectionStatus.Location = new System.Drawing.Point(475, 72);
-            this.lblConnectionStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblConnectionStatus.Name = "lblConnectionStatus";
-            this.lblConnectionStatus.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblConnectionStatus.Size = new System.Drawing.Size(136, 13);
-            this.lblConnectionStatus.TabIndex = 7;
-            this.lblConnectionStatus.Text = "Press Connect to Continue.";
             // 
             // tabQueryResults
             // 
@@ -149,26 +142,6 @@
             this.tabQueryResults.SelectedIndex = 0;
             this.tabQueryResults.Size = new System.Drawing.Size(1220, 450);
             this.tabQueryResults.TabIndex = 8;
-            // 
-            // btnExecute
-            // 
-            this.btnExecute.Location = new System.Drawing.Point(1093, 398);
-            this.btnExecute.Margin = new System.Windows.Forms.Padding(2);
-            this.btnExecute.Name = "btnExecute";
-            this.btnExecute.Size = new System.Drawing.Size(109, 26);
-            this.btnExecute.TabIndex = 1;
-            this.btnExecute.Text = "Execute";
-            this.btnExecute.UseVisualStyleBackColor = true;
-            this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
-            // 
-            // txtQuery
-            // 
-            this.txtQuery.Location = new System.Drawing.Point(0, 2);
-            this.txtQuery.Margin = new System.Windows.Forms.Padding(2);
-            this.txtQuery.Multiline = true;
-            this.txtQuery.Name = "txtQuery";
-            this.txtQuery.Size = new System.Drawing.Size(1202, 392);
-            this.txtQuery.TabIndex = 0;
             // 
             // tabpResult
             // 
@@ -182,6 +155,17 @@
             this.tabpResult.TabIndex = 1;
             this.tabpResult.Text = "Result";
             this.tabpResult.UseVisualStyleBackColor = true;
+            // 
+            // lblQueryStatus
+            // 
+            this.lblQueryStatus.AutoSize = true;
+            this.lblQueryStatus.Location = new System.Drawing.Point(706, 398);
+            this.lblQueryStatus.MinimumSize = new System.Drawing.Size(500, 13);
+            this.lblQueryStatus.Name = "lblQueryStatus";
+            this.lblQueryStatus.Size = new System.Drawing.Size(500, 13);
+            this.lblQueryStatus.TabIndex = 1;
+            this.lblQueryStatus.Text = "Idle";
+            this.lblQueryStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // dgResults
             // 
@@ -213,22 +197,46 @@
             this.txtMessage.Size = new System.Drawing.Size(1205, 419);
             this.txtMessage.TabIndex = 0;
             // 
+            // btnExecute
+            // 
+            this.btnExecute.Location = new System.Drawing.Point(1093, 398);
+            this.btnExecute.Margin = new System.Windows.Forms.Padding(2);
+            this.btnExecute.Name = "btnExecute";
+            this.btnExecute.Size = new System.Drawing.Size(109, 26);
+            this.btnExecute.TabIndex = 1;
+            this.btnExecute.Text = "Execute";
+            this.btnExecute.UseVisualStyleBackColor = true;
+            this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
+            // 
+            // txtQuery
+            // 
+            this.txtQuery.Location = new System.Drawing.Point(0, 2);
+            this.txtQuery.Margin = new System.Windows.Forms.Padding(2);
+            this.txtQuery.Multiline = true;
+            this.txtQuery.Name = "txtQuery";
+            this.txtQuery.Size = new System.Drawing.Size(1202, 392);
+            this.txtQuery.TabIndex = 0;
+            // 
             // splitContainer1
             // 
-            this.splitContainer1.Location = new System.Drawing.Point(12, 103);
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.AutoScroll = true;
             this.splitContainer1.Panel1.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.Controls.Add(this.tabQueryResults);
-            this.splitContainer1.Size = new System.Drawing.Size(1222, 923);
-            this.splitContainer1.SplitterDistance = 461;
+            this.splitContainer1.Size = new System.Drawing.Size(1237, 981);
+            this.splitContainer1.SplitterDistance = 500;
+            this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 9;
             // 
             // tabControl1
@@ -239,6 +247,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1218, 455);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 9;
             // 
             // tabPage1
@@ -254,31 +263,51 @@
             this.tabPage1.Text = "Query";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // lblQueryStatus
+            // flowLayoutPanel1
             // 
-            this.lblQueryStatus.AutoSize = true;
-            this.lblQueryStatus.Location = new System.Drawing.Point(706, 398);
-            this.lblQueryStatus.MinimumSize = new System.Drawing.Size(500, 13);
-            this.lblQueryStatus.Name = "lblQueryStatus";
-            this.lblQueryStatus.Size = new System.Drawing.Size(500, 13);
-            this.lblQueryStatus.TabIndex = 1;
-            this.lblQueryStatus.Text = "Idle";
-            this.lblQueryStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel1.Controls.Add(this.lblDSNName);
+            this.flowLayoutPanel1.Controls.Add(this.cboDSNList);
+            this.flowLayoutPanel1.Controls.Add(this.lblUserName);
+            this.flowLayoutPanel1.Controls.Add(this.txtUserName);
+            this.flowLayoutPanel1.Controls.Add(this.lblPassword);
+            this.flowLayoutPanel1.Controls.Add(this.txtPassword);
+            this.flowLayoutPanel1.Controls.Add(this.btnConnect);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(387, 3);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(847, 30);
+            this.flowLayoutPanel1.TabIndex = 10;
+            // 
+            // lblConnectionStatus
+            // 
+            this.lblConnectionStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblConnectionStatus.AutoSize = true;
+            this.lblConnectionStatus.Location = new System.Drawing.Point(1098, 36);
+            this.lblConnectionStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblConnectionStatus.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblConnectionStatus.Name = "lblConnectionStatus";
+            this.lblConnectionStatus.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lblConnectionStatus.Size = new System.Drawing.Size(136, 13);
+            this.lblConnectionStatus.TabIndex = 7;
+            this.lblConnectionStatus.Text = "Press Connect to Continue.";
+            // 
+            // panel1
+            // 
+            this.panel1.AutoSize = true;
+            this.panel1.Controls.Add(this.splitContainer1);
+            this.panel1.Location = new System.Drawing.Point(0, 54);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1237, 981);
+            this.panel1.TabIndex = 11;
             // 
             // frmHMSMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1237, 1038);
-            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.lblConnectionStatus);
-            this.Controls.Add(this.lblPassword);
-            this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.lblUserName);
-            this.Controls.Add(this.txtUserName);
-            this.Controls.Add(this.lblDSNName);
-            this.Controls.Add(this.btnConnect);
-            this.Controls.Add(this.cboDSNList);
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmHMSMain";
             this.Text = "Hive Query Studio";
@@ -296,6 +325,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,7 +342,6 @@
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.Label lblConnectionStatus;
         private System.Windows.Forms.TabControl tabQueryResults;
         private System.Windows.Forms.TextBox txtQuery;
         private System.Windows.Forms.TabPage tabpResult;
@@ -322,6 +353,9 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label lblQueryStatus;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Label lblConnectionStatus;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

@@ -207,6 +207,7 @@ namespace HiveManagementStudio
                 dgResults.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
                 lblQueryStatus.Text = "Query Execution Completed. " + dsResults.Tables[0].Rows.Count.ToString() + " rows returned.";
                 txtMessage.Text = "Query Execution Completed. " + dsResults.Tables[0].Rows.Count.ToString() + " rows returned.";
+                btnExecute.Visible = true;
             }
             catch (Exception ex)
             {
