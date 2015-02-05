@@ -148,9 +148,8 @@ namespace HiveManagementStudio
             conn.ConnectionString = "Provider=MSDASQL.1;Persist Security Info=True;User ID=" + txtUserName.Text + ";DSN=" + cleanDSNName + ";Password=" + txtPassword.Text + ";";
             try
             {
-                lblConnectionStatus.Text = "Attempting Connection.";
                 conn.Open();
-                lblConnectionStatus.Text = "Connected to " + DSNName;
+                toolSConnectionInfo.Text = "Connected to " + cleanDSNName;
                 
             }
             catch (Exception ex)
@@ -195,23 +194,23 @@ namespace HiveManagementStudio
 
             try
             {
+                toolSQueryResults.Text = "Query Executing...";
                 cmd.CommandText = txtQuery.Text;
                 cmd.Connection = conn;
 
                 daResults.SelectCommand = cmd;
-                lblQueryStatus.Text = "Query Executing...";
+                
                 daResults.Fill(dsResults);
                 bsResult.DataSource = dsResults.Tables[0];
 
                 dgResults.DataSource = bsResult;
                 dgResults.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                lblQueryStatus.Text = "Query Execution Completed. " + dsResults.Tables[0].Rows.Count.ToString() + " rows returned.";
-                txtMessage.Text = "Query Execution Completed. " + dsResults.Tables[0].Rows.Count.ToString() + " rows returned.";
+                toolSQueryResults.Text = "Query Execution Complete. " + dsResults.Tables[0].Rows.Count.ToString() + " rows returned.";
                 btnExecute.Visible = true;
             }
             catch (Exception ex)
             {
-                lblQueryStatus.Text = "Error Message Returned. Check Messages tab for more information.";
+                toolSQueryResults.Text = "Error Message Returned. Check Messages tab for more information.";
                 txtMessage.Text = ex.Message.ToString();
             }
         }
