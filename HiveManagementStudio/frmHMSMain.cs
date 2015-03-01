@@ -146,11 +146,12 @@ namespace HiveManagementStudio
             string cleanDSNName = DSNName.Substring(0, DSNName.IndexOf("-") - 1).Trim();
 
             conn.ConnectionString = "Provider=MSDASQL.1;Persist Security Info=True;User ID=" + txtUserName.Text + ";DSN=" + cleanDSNName + ";Password=" + txtPassword.Text + ";";
+
             try
             {
                 conn.Open();
                 toolSConnectionInfo.Text = "Connected to " + cleanDSNName;
-                
+                LoadDatabaseMetadata();    
             }
             catch (Exception ex)
             {
@@ -216,8 +217,6 @@ namespace HiveManagementStudio
                 txtMessage.Text = ex.Message.ToString();
             }
         }
-            //MessageBox.Show(dsResults.Tables[0].Rows.Count.ToString());
-        
 
         private StringBuilder FormatResults(System.Data.DataSet dsResults)
         {
@@ -245,9 +244,110 @@ namespace HiveManagementStudio
             return sbOutput;
         }
 
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+
+        private void LoadDatabaseMetadata()
         {
+            //routine to load the database metadata dropdown selector
+            OdbcCommand cmd = new OdbcCommand("show databases");
+            OdbcDataAdapter daDBMetadata = new OdbcDataAdapter();
+            System.Data.DataSet dsDBMetadata = new System.Data.DataSet();
+            
+            cmd.Connection = conn;
+            daDBMetadata.SelectCommand = cmd;
+            daDBMetadata.Fill(dsDBMetadata);
+            
+            cboDatabase.DataSource = dsDBMetadata.Tables[0];
+            cboDatabase.ValueMember = "database_name";
+            cboDatabase.DisplayMember = "database_name";
 
         }
+
+        private void LoadDatabaseTables()
+        {
+            //routine to load the database tables after a database is selected
+            OdbcCommand cmd = new OdbcCommand("show tables");
+            OdbcDataAdapter daDBMetadata = new OdbcDataAdapter();
+            System.Data.DataSet dsDBMetadata = new System.Data.DataSet();
+
+            cmd.Connection = conn;
+            daDBMetadata.SelectCommand = cmd;
+            daDBMetadata.Fill(dsDBMetadata);
+
+            treeTables.Nodes.Clear();
+
+            if (dsDBMetadata.Tables.Count > 0)
+            {
+                foreach (DataRow row in dsDBMetadata.Tables[0].Rows)
+                {
+                    //adds a new tree node at the highest level
+                    TreeNode NewNode = new TreeNode(row[0].ToString());
+                    treeTables.Nodes.Add(NewNode); 
+                    //add a dummy child node
+                    TreeNode ChildNode = new TreeNode("");
+                    NewNode.Nodes.Add(ChildNode);
+                }
+            }
+        }
+
+
+        private void btnDatabaseRefresh_Click(object sender, EventArgs e)
+        {
+            LoadDatabaseMetadata();
+        }
+
+        private void cboDatabase_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //first run a command to use the selected database
+            OdbcCommand cmd = new OdbcCommand();
+            try
+            {
+                string cmdtext = "use " + cboDatabase.GetItemText(cboDatabase.SelectedItem).ToString();
+                cmd.CommandText = cmdtext;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+            LoadDatabaseTables();
+        }
+
+        private void treeTables_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            //after a new row is selected, a query needs to be executed to add the nodes.
+            //if the nodes are already added, then don't run the query again
+            if (treeTables.SelectedNode.IsExpanded)
+            {
+                if (treeTables.SelectedNode.Nodes.Count == 1)
+                {
+                    OdbcCommand cmd = new OdbcCommand();
+                    OdbcDataAdapter daColumns = new OdbcDataAdapter();
+                    System.Data.DataSet dsColumns = new System.Data.DataSet();
+                    try
+                    {
+                        string cmdtext = "describe " + treeTables.SelectedNode.Text.ToString();
+                        cmd.CommandText = cmdtext;
+                        cmd.Connection = conn;
+                        daColumns.SelectCommand = cmd;
+                        daColumns.Fill(dsColumns);
+
+                        if (dsColumns.Tables.Count > 0)
+                        {
+                            treeTables.SelectedNode.Nodes.Clear(); //clear the list of nodes to remove the previously placed dummy node
+                            foreach (DataRow row in dsColumns.Tables[0].Rows)
+                            {
+                                string strNodeText = row["col_name"].ToString() + " (" + row["data_type"].ToString() + ")";
+                                TreeNode NewNode = new TreeNode(strNodeText);
+                                treeTables.SelectedNode.Nodes.Add(NewNode);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                }
+            }
+        }
+
     }
 }
